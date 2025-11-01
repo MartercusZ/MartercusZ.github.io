@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TANGO - TOTY</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0.4;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: black;
+      z-index: 1;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .detalle {
+      padding: 60px 20px;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .detalle h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .galeria-fotos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .galeria-fotos img,
+    .galeria-fotos video {
+      width: 450px;
+      height: 450px;
+      max-width: 90vw;
+      object-fit: cover;
+      background-color: transparent;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .flecha {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .flecha:hover {
+      color: gray;
+    }
+
+    .detalle p {
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1rem;
+    }
+
+    .boton-comprar {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .boton-comprar a {
+      background-color: white;
+      color: black;
+      padding: 12px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: background 0.3s ease;
+    }
+
+    .boton-comprar a:hover {
+      background-color: #ccc;
+    }
+
+    @media (max-width: 800px) {
+      .galeria-fotos {
+        flex-direction: column;
+      }
+
+      .flecha {
+        font-size: 2rem;
+      }
+
+      .galeria-fotos img,
+      .galeria-fotos video {
+        width: 90%;
+        height: auto;
+      }
+
+      .detalle h2 {
+        font-size: 1.5rem;
+      }
+
+      .detalle p {
+        font-size: 0.9rem;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <video class="video-fondo" autoplay muted loop playsinline>
+    <source src="material/buzo negro/fondo.mp4" type="video/mp4" />
+    Tu navegador no soporta video.
+  </video>
+
+  <div class="overlay"></div>
+
+  <header>
+    <div class="logo">TOTY</div>
+    <nav>
+      <a href="catalogo.html">VOLVER AL CATÁLOGO</a>
+    </nav>
+  </header>
+
+  <section class="detalle">
+    <h2>TANGO</h2>
+
+    <div class="galeria-fotos">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <button class="flecha" onclick="cambiarFoto(-1)">&#8592;</button>
+        <img id="fotoBuzo" src="material/buzo negro/IMG_2158.JPG" alt="TANGO 1">
+        <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
+      </div>
+
+      <video autoplay muted loop playsinline>
+        <source src="material/buzo negro/v09044g40000d1c9dmvog65se6pethb0 (1).MP4" type="video/mp4" />
+        Tu navegador no soporta video.
+      </video>
+    </div>
+
+    <p>
+      Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bordado sutil en el pecho, otro imponente en la espalda, y un cordón que invita al tacto. Las mangas y costuras acompañan con relieve, mientras dos ajustadores permiten moldearlo al cuerpo o al momento. Bajo el lino, un código oculto, exclusivo, que no se repite: una firma invisible para quien lo habita.
+    </p>
+
+    <div class="boton-comprar">
+      <a href="comprar.html">COMPRAR AHORA</a>
+    </div>
+  </section>
+
+  <script>
+    const fotos = [
+      "material/buzo negro/IMG_2158.JPG",
+      "material/buzo negro/IMG_2684.JPG",
+      "material/buzo negro/989e0027-48f0-433d-84b5-39460737f8bf.JPG",
+      "material/buzo negro/IMG_2924.jpg",
+      "material/buzo negro/IMG_2757 (1).jpg",
+      "material/buzo negro/talle.jpg"
+    ];
+
+    let index = 0;
+
+    function cambiarFoto(direccion) {
+      index += direccion;
+      if (index < 0) index = fotos.length - 1;
+      if (index >= fotos.length) index = 0;
+      document.getElementById("fotoBuzo").src = fotos[index];
+    }
+  </script>
+</body>
+</html>

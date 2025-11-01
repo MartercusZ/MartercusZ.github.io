@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presencia Violeta - TOTY</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 🎥 Video como fondo */
+    .video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 70%;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    /* 🖤 Header */
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1;
+      position: relative;
+      background-color: black;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    /* 📸 Detalle producto */
+    .detalle {
+      padding: 60px 20px;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .detalle h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .galeria-fotos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .galeria-fotos img,
+    .galeria-fotos video {
+      width: 450px;
+      height: 450px;
+      max-width: 90vw;
+      object-fit: cover;
+      background-color: black;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+    .flecha {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .flecha:hover {
+      color: gray;
+    }
+
+    .detalle p {
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+    /* 💳 Botón comprar */
+    .boton-comprar {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .boton-comprar a {
+      background-color: white;
+      color: black;
+      padding: 12px 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: background 0.3s ease;
+    }
+
+    .boton-comprar a:hover {
+      background-color: #ccc;
+    }
+
+    @media (max-width: 800px) {
+      .galeria-fotos {
+        flex-direction: column;
+      }
+
+      .flecha {
+        font-size: 2rem;
+      }
+
+      .galeria-fotos img,
+      .galeria-fotos video {
+        width: 90%;
+        height: auto;
+      }
+
+      .detalle h2 {
+        font-size: 1.5rem;
+      }
+
+      .detalle p {
+        font-size: 0.9rem;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎥 VIDEO DE FONDO -->
+  <video class="video-fondo" autoplay muted loop playsinline>
+    <source src="material/buzo violeta/Fondo video Velocidad luz neón brillante HD.mp4" type="video/mp4" />
+    Tu navegador no soporta video.
+  </video>
+  <div class="overlay"></div>
+
+  <!-- 🖤 HEADER -->
+  <header>
+    <div class="logo">TOTY</div>
+    <nav>
+      <a href="catalogo.html">VOLVER AL CATÁLOGO</a>
+    </nav>
+  </header>
+
+  <!-- 📸 DETALLE DEL PRODUCTO -->
+  <section class="detalle">
+    <h2>PRESENCIA VIOLETA</h2>
+
+    <div class="galeria-fotos">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <button class="flecha" onclick="cambiarFoto(-1)">&#8592;</button>
+        <img id="fotoBuzo" src="material/buzo violeta/SaveClip.App_491466138_17953559660948282_4110842925156818103_n.jpg" alt="Violeta 1">
+        <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
+      </div>
+
+      <video autoplay muted loop playsinline>
+        <source src="material/buzo violeta/IMG_7486.MP4" type="video/mp4" />
+        Tu navegador no soporta video.
+      </video>
+    </div>
+
+    <p>
+      Buzo violeta cargado de texturas, pensadas para sentirse tanto como para verse. En el frente, una única rosa bordada marca el centro con delicadeza. Cada superficie invita al contacto, resaltando el trabajo en cada parte de la prenda. Como siempre, bajo el tejido, un código único e irrepetible: solo pertenece a quien lo lleva.
+    </p>
+
+    <!-- BOTÓN COMPRAR -->
+    <div class="boton-comprar">
+      <a href="comprar.html">COMPRAR AHORA</a>
+    </div>
+  </section>
+
+  <!-- JS para cambiar imagen -->
+  <script>
+    const fotos = [
+      "material/buzo violeta/IMG_8380.jpeg",
+      "material/buzo violeta/fotoing.jpg",
+      "material/buzo violeta/SaveClip.App_491466138_17953559660948282_4110842925156818103_n.jpg"
+    ];
+
+    let index = 0;
+
+    function cambiarFoto(direccion) {
+      index += direccion;
+      if (index < 0) index = fotos.length - 1;
+      if (index >= fotos.length) index = 0;
+      document.getElementById("fotoBuzo").src = fotos[index];
+    }
+  </script>
+
+</body>
+</html>
