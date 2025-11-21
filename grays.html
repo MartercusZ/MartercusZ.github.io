@@ -117,11 +117,11 @@
 
     .boton-comprar {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
       margin-top: 20px;
     }
-
-    /* El botón de Shopify se estiliza desde el script */
   </style>
 </head>
 <body>
@@ -160,16 +160,30 @@
     </div>
 
     <p>
-      Buzo en gris nieve, con una textura que recuerda a la calma de un paisaje invernal. Cada relieve en su superficie está pensado para aportar carácter, sin necesidad de excesos. Al frente, un único bordado habla con sutileza, dejando que el resto del diseño respire. No hay distracciones: solo formas puras, limpias, diseñadas para acompañar con elegancia. Bajo la tela, un código único e irrepetible, invisible a los ojos, pero presente en cada prenda: una huella exclusiva para quien lo tiene.
+      Buzo en gris nieve, con una textura que recuerda a la calma de un paisaje invernal.
+      Cada relieve en su superficie está pensado para aportar carácter sin necesidad de excesos.
+      Bajo la tela, un código único e irrepetible: una huella exclusiva para quien lo tiene.
     </p>
 
-    <!-- BOTÓN SHOPIFY -->
+    <!-- 🟣 BOTÓN SHOPIFY + TEXTO TALLE -->
     <div class="boton-comprar">
+
+      <p style="
+        color:#ddd;
+        font-size:12px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        margin-bottom:6px;
+        font-weight:300;
+        text-align:center;
+      ">Talle</p>
+
       <div id="product-component-1763380217897"></div>
     </div>
+
   </section>
 
-  <!-- JS para cambiar imagen -->
+  <!-- JS GALERÍA -->
   <script>
     const fotos = [
       "material/buzo gris/otra.jpg",
@@ -188,7 +202,7 @@
     }
   </script>
 
-  <!-- 🟣 SCRIPT SHOPIFY SOLO BOTÓN + CARRITO -->
+  <!-- 🟣 SHOPIFY BUY BUTTON -->
   <script type="text/javascript">
 (function () {
   var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -232,7 +246,7 @@
               price: false,
               description: false,
               quantity: false,
-              options: false
+              options: true
             },
 
             styles: {
@@ -255,6 +269,58 @@
 
             text: {
               button: "COMPRAR AHORA"
+            }
+          },
+
+          /* 🎨 SELECTOR DE TALLE GRIS */
+          option: {
+            styles: {
+              wrapper: {
+                "background-color": "transparent",
+                "border": "none",
+                "box-shadow": "none",
+                "padding": "0",
+                "margin": "0 0 12px 0"
+              },
+
+              label: {
+                "color": "#ddd",
+                "font-size": "12px",
+                "letter-spacing": "2px",
+                "text-transform": "uppercase",
+                "margin-bottom": "6px",
+                "font-weight": "300",
+                "text-align": "left"
+              },
+
+              select: {
+                "background-color": "#2e2e2e",
+                "border": "1px solid #2e2e2e",
+                "border-radius": "6px",
+                "color": "#fff",
+                "padding": "10px 14px",
+                "font-size": "14px",
+                "text-align": "center",
+                "margin-bottom": "16px",
+                "outline": "none",
+                "appearance": "none",
+                "-webkit-appearance": "none",
+                "-moz-appearance": "none",
+                "box-shadow": "none",
+                "cursor": "pointer",
+                "transition": "0.25s",
+                "width": "100%",
+                ":hover": {
+                  "background-color": "#3a3a3a",
+                  "border-color": "#3a3a3a"
+                },
+                ":focus": {
+                  "background-color": "#3a3a3a",
+                  "border-color": "#3a3a3a",
+                  "box-shadow": "none",
+                  "outline": "none"
+                }
+              }
             }
           },
 
@@ -288,7 +354,8 @@
               img: true,
               imgWithCarousel: true,
               button: false,
-              buttonWithQuantity: true
+              buttonWithQuantity: true,
+              options: true
             },
             styles: {
               button: {
