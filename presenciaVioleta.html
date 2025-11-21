@@ -20,7 +20,6 @@
       overflow-x: hidden;
     }
 
-    /* 🎥 Video como fondo */
     .video-fondo {
       position: fixed;
       top: 0;
@@ -42,7 +41,6 @@
       z-index: -1;
     }
 
-    /* 🖤 Header */
     header {
       padding: 20px 40px;
       display: flex;
@@ -65,7 +63,6 @@
       font-size: 1rem;
     }
 
-    /* 📸 Detalle producto */
     .detalle {
       padding: 60px 20px;
       text-align: center;
@@ -119,10 +116,11 @@
       font-size: 1rem;
     }
 
-    /* 💳 Contenedor del botón de comprar */
     .boton-comprar {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
       margin-top: 40px;
     }
   </style>
@@ -130,14 +128,13 @@
 
 <body>
 
-  <!-- 🎥 VIDEO DE FONDO -->
   <video class="video-fondo" autoplay muted loop playsinline>
     <source src="material/buzo violeta/Fondo video Velocidad luz neón brillante HD.mp4" type="video/mp4" />
     Tu navegador no soporta video.
   </video>
+
   <div class="overlay"></div>
 
-  <!-- 🖤 HEADER -->
   <header>
     <div class="logo">TOTY</div>
     <nav>
@@ -145,7 +142,6 @@
     </nav>
   </header>
 
-  <!-- 📸 DETALLE DEL PRODUCTO -->
   <section class="detalle">
     <h2>PRESENCIA VIOLETA</h2>
 
@@ -163,17 +159,30 @@
     </div>
 
     <p>
-      Buzo violeta cargado de texturas, pensadas para sentirse tanto como para verse. En el frente, una única rosa bordada marca el centro con delicadeza. Como siempre, bajo el tejido, un código único e irrepetible: solo pertenece a quien lo lleva.
+      Buzo violeta cargado de texturas, pensadas para sentirse tanto como para verse.
+      En el frente, una única rosa bordada marca el centro con delicadeza.
+      Como siempre, bajo el tejido, un código único e irrepetible: solo pertenece a quien lo lleva.
     </p>
 
-    <!-- 🟣 BOTÓN SHOPIFY -->
+    <!-- 🟣 BOTÓN SHOPIFY + TEXTO TALLE -->
     <div class="boton-comprar">
+
+      <p style="
+        color:#ddd;
+        font-size:12px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        margin-bottom:6px;
+        font-weight:300;
+        text-align:center;
+      ">Talle</p>
+
       <div id="product-component-1763383241123"></div>
+
     </div>
 
   </section>
 
-  <!-- 📸 SCRIPT GALERÍA -->
   <script>
     const fotos = [
       "material/buzo violeta/IMG_8380.jpeg",
@@ -191,7 +200,6 @@
     }
   </script>
 
-  <!-- 🛒 SCRIPT SHOPIFY -->
   <script type="text/javascript">
     (function () {
       var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -234,7 +242,7 @@
                   price: false,
                   description: false,
                   quantity: false,
-                  options: false
+                  options: true
                 },
                 styles: {
                   product: {
@@ -255,6 +263,43 @@
                 },
                 text: {
                   button: "COMPRAR AHORA"
+                }
+              },
+
+              option: {
+                styles: {
+                  wrapper: {
+                    "background-color": "transparent",
+                    "border": "none",
+                    "box-shadow": "none",
+                    "padding": "0",
+                    "margin": "0 0 12px 0"
+                  },
+                  label: {
+                    "color": "#ddd",
+                    "font-size": "12px",
+                    "letter-spacing": "2px",
+                    "text-transform": "uppercase",
+                    "margin-bottom": "6px",
+                    "font-weight": "300"
+                  },
+                  select: {
+                    "background-color": "#2e2e2e",
+                    "border": "1px solid #2e2e2e",
+                    "border-radius": "6px",
+                    "color": "#fff",
+                    "padding": "10px 14px",
+                    "font-size": "14px",
+                    "text-align": "center",
+                    "margin-bottom": "16px",
+                    "outline": "none",
+                    "appearance": "none",
+                    "-webkit-appearance": "none",
+                    "-moz-appearance": "none",
+                    "box-shadow": "none",
+                    "cursor": "pointer",
+                    "transition": "0.25s"
+                  }
                 }
               },
 
@@ -290,7 +335,8 @@
                   img: true,
                   imgWithCarousel: true,
                   button: false,
-                  buttonWithQuantity: true
+                  buttonWithQuantity: true,
+                  options: true
                 },
                 styles: {
                   button: {
