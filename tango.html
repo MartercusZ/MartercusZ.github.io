@@ -19,7 +19,6 @@
       overflow-x: hidden;
     }
 
-    /* VIDEO DE FONDO — CORRECCIÓN PARA CELULAR */
     .video-fondo {
       position: fixed;
       top: 0;
@@ -29,10 +28,10 @@
       object-fit: cover;
       opacity: 0.4;
       z-index: -2;
-      pointer-events: none; /* sin interacción */
+      pointer-events: none; /* que no se pueda tocar */
     }
 
-    /* Ocultar botón de play en iPhone / Android */
+    /* Ocultar botón de play y controles en iOS / WebKit */
     .video-fondo::-webkit-media-controls-start-playback-button {
       display: none !important;
       -webkit-appearance: none;
@@ -128,7 +127,7 @@
 
     .boton-comprar {
       display: flex;
-      flex-direction: column;
+      flex-direction: column;   /* texto "Talle" + selector */
       align-items: center;
       justify-content: center;
       margin-top: 20px;
@@ -137,7 +136,7 @@
 </head>
 <body>
 
-  <!-- VIDEO DE FONDO -->
+  <!-- VIDEO DE FONDO CON AUTOPLAY CORREGIDO -->
   <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="material/buzo negro/fondo.mp4" type="video/mp4" />
     Tu navegador no soporta video.
@@ -172,7 +171,9 @@
       Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bordado sutil en el pecho, otro imponente en la espalda, y un cordón que invita al tacto. Las mangas y costuras acompañan con relieve, mientras dos ajustadores permiten moldearlo al cuerpo o al momento. Bajo el lino, un código oculto, exclusivo, que no se repite: una firma invisible para quien lo habita.
     </p>
 
+    <!-- BOTÓN SHOPIFY -->
     <div class="boton-comprar">
+      <!-- Etiqueta "Talle" -->
       <p style="
         color:#ddd;
         font-size:12px;
@@ -181,13 +182,15 @@
         margin-bottom:6px;
         font-weight:300;
         text-align:center;
-      ">Talle</p>
+      ">
+        Talle
+      </p>
 
       <div id="product-component-1763380930645"></div>
     </div>
   </section>
 
-  <!-- GALERÍA -->
+  <!-- Script galería de fotos -->
   <script>
     const fotos = [
       "material/buzo negro/IMG_2158.JPG",
@@ -197,6 +200,7 @@
       "material/buzo negro/IMG_2757 (1).jpg",
       "material/buzo negro/talle.jpg"
     ];
+
     let index = 0;
 
     function cambiarFoto(direccion) {
@@ -207,82 +211,190 @@
     }
   </script>
 
-  <!-- FORZAR PLAY EN CELULAR SI FALLA -->
+  <!-- Fuerza el play del video de fondo en móviles si el navegador lo bloquea -->
   <script>
-    document.addEventListener("touchstart", () => {
+    document.addEventListener("DOMContentLoaded", function () {
       const vid = document.querySelector(".video-fondo");
-      if (vid && vid.paused) vid.play().catch(() => {});
-    }, { once: true });
+      if (vid) {
+        vid.muted = true;
+        vid.play().catch(() => {});
+      }
+    });
   </script>
 
-  <!-- SHOPIFY -->
+  <!-- Script de Shopify: botón + talles + carrito -->
   <script type="text/javascript">
-    (function () {
-      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  (function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
 
-      if (window.ShopifyBuy) {
-        if (window.ShopifyBuy.UI) {
-          ShopifyBuyInit();
-        } else {
-          loadScript();
-        }
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
+        ShopifyBuyInit();
       } else {
         loadScript();
       }
+    } else {
+      loadScript();
+    }
 
-      function loadScript() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = scriptURL;
-        document.body.appendChild(script);
-        script.onload = ShopifyBuyInit;
-      }
+    function loadScript() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      document.body.appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
 
-      function ShopifyBuyInit() {
-        var client = ShopifyBuy.buildClient({
-          domain: 'tyfukc-4b.myshopify.com',
-          storefrontAccessToken: 'a8413ee5dde4253704b93932cee84e2a',
-        });
+    function ShopifyBuyInit() {
+      var client = ShopifyBuy.buildClient({
+        domain: 'tyfukc-4b.myshopify.com',
+        storefrontAccessToken: 'a8413ee5dde4253704b93932cee84e2a',
+      });
 
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          ui.createComponent('product', {
-            id: '7728744398891',
-            node: document.getElementById('product-component-1763380930645'),
-            moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
-            options: {
-              product: {
-                contents: {
-                  img: false,
-                  imgWithCarousel: false,
-                  title: false,
-                  price: false,
-                  description: false,
-                  quantity: false,
-                  options: true
+      ShopifyBuy.UI.onReady(client).then(function (ui) {
+        ui.createComponent('product', {
+          id: '7728744398891', // ID del producto TANGO en Shopify
+          node: document.getElementById('product-component-1763380930645'),
+          moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
+          options: {
+            product: {
+              contents: {
+                img: false,
+                imgWithCarousel: false,
+                title: false,
+                price: false,
+                description: false,
+                quantity: false,
+                options: true
+              },
+              styles: {
+                product: {
+                  "box-shadow": "none",
+                  "background-color": "transparent",
+                  "border": "none",
+                  "text-align": "center"
                 },
-                styles: {
-                  product: {
-                    "box-shadow": "none",
-                    "background-color": "transparent",
-                    "border": "none",
-                    "text-align": "center"
+                button: {
+                  "background-color": "#5c1695",
+                  "border-radius": "30px",
+                  "padding": "12px 24px",
+                  "font-weight": "bold",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                button: "COMPRAR AHORA"
+              }
+            },
+
+            option: {
+              styles: {
+                wrapper: {
+                  "background-color": "transparent",
+                  "border": "none",
+                  "box-shadow": "none",
+                  "padding": "0",
+                  "margin": "0 0 12px 0"
+                },
+                label: {
+                  "color": "#ddd",
+                  "font-size": "12px",
+                  "letter-spacing": "2px",
+                  "text-transform": "uppercase",
+                  "margin-bottom": "6px",
+                  "font-weight": "300",
+                  "text-align": "left"
+                },
+                select: {
+                  "background-color": "#2e2e2e",
+                  "border": "1px solid #2e2e2e",
+                  "border-radius": "6px",
+                  "color": "#fff",
+                  "padding": "10px 14px",
+                  "font-size": "14px",
+                  "text-align": "center",
+                  "margin-bottom": "16px",
+                  "outline": "none",
+                  "appearance": "none",
+                  "-webkit-appearance": "none",
+                  "-moz-appearance": "none",
+                  "box-shadow": "none",
+                  "cursor": "pointer",
+                  "transition": "0.25s",
+                  "width": "100%",
+                  ":hover": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a"
                   },
-                  button: {
-                    "background-color": "#5c1695",
-                    "border-radius": "30px",
-                    "padding": "12px 24px",
-                    "font-weight": "bold",
-                    ":hover": { "background-color": "#9c25fd" },
-                    ":focus": { "background-color": "#9c25fd" }
+                  ":focus": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a",
+                    "box-shadow": "none",
+                    "outline": "none"
+                  }
+                }
+              }
+            },
+
+            cart: {
+              styles: {
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                title: "Carrito",
+                total: "TOTAL",
+                empty: "Tu carrito está vacío",
+                notice: "",
+                button: "Comprar"
+              }
+            },
+
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              }
+            },
+
+            modalProduct: {
+              contents: {
+                img: true,
+                imgWithCarousel: true,
+                button: false,
+                buttonWithQuantity: true,
+                options: true
+              },
+              styles: {
+                product: {
+                  "@media (min-width: 601px)": {
+                    "max-width": "100%",
+                    "margin-left": "0px",
+                    "margin-bottom": "0px"
                   }
                 },
-                text: { button: "COMPRAR AHORA" }
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                button: "Agregar al carrito"
               }
             }
-          });
+          }
         });
-      }
-    })();
+      });
+    }
+  })();
   </script>
 </body>
 </html>
