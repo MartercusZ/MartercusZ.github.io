@@ -17,6 +17,12 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+      background-color: #000; /* base */
+    }
+
+    /* clase que usaremos SOLO en Safari (imagen de fondo) */
+    body.safari-static-bg {
+      background: #000 url("material/buzo negro/IMG_2158.JPG") center center / cover no-repeat fixed;
     }
 
     .video-fondo {
@@ -29,15 +35,6 @@
       opacity: 0.4;
       z-index: -2;
       pointer-events: none; /* que no se pueda tocar */
-    }
-
-    /* Ocultar botón de play y controles en iOS / WebKit */
-    .video-fondo::-webkit-media-controls-start-playback-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-    .video-fondo::-webkit-media-controls {
-      display: none !important;
     }
 
     .overlay {
@@ -127,7 +124,7 @@
 
     .boton-comprar {
       display: flex;
-      flex-direction: column;   /* texto "Talle" + selector */
+      flex-direction: column;   /* texto "Talle" + selector + botón */
       align-items: center;
       justify-content: center;
       margin-top: 20px;
@@ -136,7 +133,7 @@
 </head>
 <body>
 
-  <!-- VIDEO DE FONDO CON AUTOPLAY CORREGIDO -->
+  <!-- 🎥 VIDEO DE FONDO (para navegadores que no son Safari móvil) -->
   <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="material/buzo negro/fondo.mp4" type="video/mp4" />
     Tu navegador no soporta video.
@@ -173,7 +170,6 @@
 
     <!-- BOTÓN SHOPIFY -->
     <div class="boton-comprar">
-      <!-- Etiqueta "Talle" -->
       <p style="
         color:#ddd;
         font-size:12px;
@@ -211,15 +207,23 @@
     }
   </script>
 
-  <!-- Fuerza el play del video de fondo en móviles si el navegador lo bloquea -->
+  <!-- 🕵️ Detectar Safari (sobre todo en iOS) y desactivar el video de fondo -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const vid = document.querySelector(".video-fondo");
-      if (vid) {
-        vid.muted = true;
-        vid.play().catch(() => {});
+    (function() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/i.test(ua);
+
+      if (isIOS && isSafari) {
+        // Safari en iPhone/iPad → usamos imagen de fondo
+        document.body.classList.add('safari-static-bg');
+        const videoFondo = document.querySelector('.video-fondo');
+        if (videoFondo) {
+          videoFondo.parentNode.removeChild(videoFondo);
+        }
       }
-    });
+    })();
   </script>
 
   <!-- Script de Shopify: botón + talles + carrito -->
