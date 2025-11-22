@@ -17,6 +17,13 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+      background-color: #000;
+    }
+
+    /* Fondo estático para Safari en iOS (versión GRAYS) */
+    body.safari-static-bg {
+      background: #000 url("material/buzo gris/otra.jpg")
+        center center / cover no-repeat fixed;
     }
 
     .video-fondo {
@@ -26,8 +33,9 @@
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      opacity: 0.9;
+      opacity: 0.7;
       z-index: -2;
+      pointer-events: none; /* que no moleste los clics */
     }
 
     .overlay {
@@ -127,7 +135,7 @@
 <body>
 
   <!-- 🎥 VIDEO DE FONDO -->
-  <video class="video-fondo" autoplay muted loop playsinline>
+  <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="material/buzo gris/🎬 Dron sobre montaña con nieve 🧣 Nieve 🎫 Video sin Licencia Copyright.mp4" type="video/mp4" />
     Tu navegador no soporta video.
   </video>
@@ -153,7 +161,7 @@
         <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
       </div>
 
-      <video autoplay muted loop playsinline>
+      <video autoplay muted loop playsinline webkit-playsinline>
         <source src="material/buzo gris/fondo.mp4" type="video/mp4" />
         Tu navegador no soporta video.
       </video>
@@ -204,176 +212,195 @@
 
   <!-- 🟣 SHOPIFY BUY BUTTON -->
   <script type="text/javascript">
-(function () {
-  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  (function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
 
-  if (window.ShopifyBuy) {
-    if (window.ShopifyBuy.UI) {
-      ShopifyBuyInit();
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
+        ShopifyBuyInit();
+      } else {
+        loadScript();
+      }
     } else {
       loadScript();
     }
-  } else {
-    loadScript();
-  }
 
-  function loadScript() {
-    var script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
-    document.body.appendChild(script);
-    script.onload = ShopifyBuyInit;
-  }
+    function loadScript() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      document.body.appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
 
-  function ShopifyBuyInit() {
-    var client = ShopifyBuy.buildClient({
-      domain: 'tyfukc-4b.myshopify.com',
-      storefrontAccessToken: 'a8413ee5dde4253704b93932cee84e2a',
-    });
+    function ShopifyBuyInit() {
+      var client = ShopifyBuy.buildClient({
+        domain: 'tyfukc-4b.myshopify.com',
+        storefrontAccessToken: 'a8413ee5dde4253704b93932cee84e2a',
+      });
 
-    ShopifyBuy.UI.onReady(client).then(function (ui) {
-      ui.createComponent('product', {
-        id: '7728761045035',
-        node: document.getElementById('product-component-1763380217897'),
-        moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
+      ShopifyBuy.UI.onReady(client).then(function (ui) {
+        ui.createComponent('product', {
+          id: '7728761045035',
+          node: document.getElementById('product-component-1763380217897'),
+          moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
 
-        options: {
-          product: {
-            contents: {
-              img: false,
-              imgWithCarousel: false,
-              title: false,
-              price: false,
-              description: false,
-              quantity: false,
-              options: true
-            },
-
-            styles: {
-              product: {
-                "box-shadow": "none",
-                "background-color": "transparent",
-                "border": "none",
-                "text-align": "center",
+          options: {
+            product: {
+              contents: {
+                img: false,
+                imgWithCarousel: false,
+                title: false,
+                price: false,
+                description: false,
+                quantity: false,
+                options: true
               },
 
-              button: {
-                "background-color": "#5c1695",
-                "border-radius": "30px",
-                "padding": "12px 24px",
-                "font-weight": "bold",
-                ":hover": { "background-color": "#9c25fd" },
-                ":focus": { "background-color": "#9c25fd" }
+              styles: {
+                product: {
+                  "box-shadow": "none",
+                  "background-color": "transparent",
+                  "border": "none",
+                  "text-align": "center"
+                },
+
+                button: {
+                  "background-color": "#5c1695",
+                  "border-radius": "30px",
+                  "padding": "12px 24px",
+                  "font-weight": "bold",
+                  "color": "white",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+
+              text: {
+                button: "COMPRAR AHORA"
               }
             },
 
-            text: {
-              button: "COMPRAR AHORA"
-            }
-          },
-
-          /* 🎨 SELECTOR DE TALLE GRIS */
-          option: {
-            styles: {
-              wrapper: {
-                "background-color": "transparent",
-                "border": "none",
-                "box-shadow": "none",
-                "padding": "0",
-                "margin": "0 0 12px 0"
-              },
-
-              label: {
-                "color": "#ddd",
-                "font-size": "12px",
-                "letter-spacing": "2px",
-                "text-transform": "uppercase",
-                "margin-bottom": "6px",
-                "font-weight": "300",
-                "text-align": "left"
-              },
-
-              select: {
-                "background-color": "#2e2e2e",
-                "border": "1px solid #2e2e2e",
-                "border-radius": "6px",
-                "color": "#fff",
-                "padding": "10px 14px",
-                "font-size": "14px",
-                "text-align": "center",
-                "margin-bottom": "16px",
-                "outline": "none",
-                "appearance": "none",
-                "-webkit-appearance": "none",
-                "-moz-appearance": "none",
-                "box-shadow": "none",
-                "cursor": "pointer",
-                "transition": "0.25s",
-                "width": "100%",
-                ":hover": {
-                  "background-color": "#3a3a3a",
-                  "border-color": "#3a3a3a"
-                },
-                ":focus": {
-                  "background-color": "#3a3a3a",
-                  "border-color": "#3a3a3a",
+            /* 🎨 SELECTOR DE TALLE GRIS */
+            option: {
+              styles: {
+                wrapper: {
+                  "background-color": "transparent",
+                  "border": "none",
                   "box-shadow": "none",
-                  "outline": "none"
+                  "padding": "0",
+                  "margin": "0 0 12px 0"
+                },
+
+                label: {
+                  "color": "#ddd",
+                  "font-size": "12px",
+                  "letter-spacing": "2px",
+                  "text-transform": "uppercase",
+                  "margin-bottom": "6px",
+                  "font-weight": "300",
+                  "text-align": "left"
+                },
+
+                select: {
+                  "background-color": "#2e2e2e",
+                  "border": "1px solid #2e2e2e",
+                  "border-radius": "6px",
+                  "color": "#fff",
+                  "padding": "10px 14px",
+                  "font-size": "14px",
+                  "text-align": "center",
+                  "margin-bottom": "16px",
+                  "outline": "none",
+                  "appearance": "none",
+                  "-webkit-appearance": "none",
+                  "-moz-appearance": "none",
+                  "box-shadow": "none",
+                  "cursor": "pointer",
+                  "transition": "0.25s",
+                  "width": "100%",
+                  ":hover": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a"
+                  },
+                  ":focus": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a",
+                    "box-shadow": "none",
+                    "outline": "none"
+                  }
                 }
               }
-            }
-          },
+            },
 
-          cart: {
-            styles: {
-              button: {
-                "background-color": "#5c1695",
-                ":hover": { "background-color": "#9c25fd" },
-                ":focus": { "background-color": "#9c25fd" }
+            cart: {
+              styles: {
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                title: "Carrito",
+                total: "TOTAL",
+                button: "Comprar"
               }
             },
-            text: {
-              title: "Carrito",
-              total: "TOTAL",
-              button: "Comprar"
-            }
-          },
 
-          toggle: {
-            styles: {
-              toggle: {
-                "background-color": "#5c1695",
-                ":hover": { "background-color": "#9c25fd" },
-                ":focus": { "background-color": "#9c25fd" }
-              }
-            }
-          },
-
-          modalProduct: {
-            contents: {
-              img: true,
-              imgWithCarousel: true,
-              button: false,
-              buttonWithQuantity: true,
-              options: true
-            },
-            styles: {
-              button: {
-                "background-color": "#5c1695",
-                ":hover": { "background-color": "#9c25fd" },
-                ":focus": { "background-color": "#9c25fd" }
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
               }
             },
-            text: {
-              button: "Agregar al carrito"
+
+            modalProduct: {
+              contents: {
+                img: true,
+                imgWithCarousel: true,
+                button: false,
+                buttonWithQuantity: true,
+                options: true
+              },
+              styles: {
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                button: "Agregar al carrito"
+              }
             }
           }
-        }
+        });
       });
-    });
-  }
-})();
-</script>
+    }
+  })();
+  </script>
+
+  <!-- 🕵️ Detectar Safari en iOS y desactivar el video de fondo (igual que en Violeta) -->
+  <script>
+    (function() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/i.test(ua);
+
+      if (isIOS && isSafari) {
+        document.body.classList.add('safari-static-bg');
+        const videoFondo = document.querySelector('.video-fondo');
+        if (videoFondo) {
+          videoFondo.parentNode.removeChild(videoFondo);
+        }
+      }
+    })();
+  </script>
 
 </body>
 </html>
