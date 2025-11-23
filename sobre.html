@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOBRE - TOTY</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      background: #000 url("material/buzo sobre/fondo.png") center center / cover no-repeat fixed;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: black;
+      z-index: 1;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .detalle {
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .detalle h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .galeria-fotos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .galeria-fotos img,
+    .galeria-fotos video {
+      width: 450px;
+      height: 450px;
+      max-width: 90vw;
+      object-fit: cover;
+      background-color: transparent;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .flecha {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .flecha:hover {
+      color: gray;
+    }
+
+    .detalle p {
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1rem;
+    }
+
+    .boton-comprar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">TOTY</div>
+    <nav>
+      <a href="catalogo.html">VOLVER AL CATÁLOGO</a>
+    </nav>
+  </header>
+
+  <!-- DETALLE -->
+  <section class="detalle">
+    <h2>SOBRE</h2>
+
+    <div class="galeria-fotos">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <button class="flecha" onclick="cambiarFoto(-1)">&#8592;</button>
+
+        <!-- Foto principal -->
+        <img id="fotoBuzo" src="material/buzo sobre/1.jpg" alt="SOBRE 1">
+
+        <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
+      </div>
+
+      <!-- Video adicional (si no lo querés, podés borrar este bloque también) -->
+      <video autoplay muted loop playsinline webkit-playsinline>
+        <source src="material/buzo sobre/video.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <p>
+      Un diseño pensado como un mensaje: directo, claro y lleno de intención. El buzo “SOBRE” combina textura, detalles y un contraste elegante.
+    </p>
+
+    <!-- BOTÓN SHOPIFY -->
+    <div class="boton-comprar">
+      <p style="
+        color:#ddd;
+        font-size:12px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        margin-bottom:6px;
+        font-weight:300;
+        text-align:center;
+      ">
+        Talle
+      </p>
+
+      <div id="product-component-1763861359099"></div>
+    </div>
+
+  </section>
+
+  <!-- GALERÍA JS -->
+  <script>
+    const fotos = [
+      "material/buzo sobre/1.jpg",
+      "material/buzo sobre/2.jpg",
+      "material/buzo sobre/3.jpg",
+      "material/buzo sobre/4.jpg",
+      "material/buzo sobre/5.jpg"
+    ];
+
+    let index = 0;
+
+    function cambiarFoto(direccion) {
+      index += direccion;
+      if (index < 0) index = fotos.length - 1;
+      if (index >= fotos.length) index = 0;
+      document.getElementById("fotoBuzo").src = fotos[index];
+    }
+  </script>
+
+  <!-- Script de Shopify: botón + talles + carrito (CONFIG COMO TANGO) -->
+  <script type="text/javascript">
+  (function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+    if (window.ShopifyBuy) {
+      if (window.ShopifyBuy.UI) {
+        ShopifyBuyInit();
+      } else {
+        loadScript();
+      }
+    } else {
+      loadScript();
+    }
+
+    function loadScript() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      document.body.appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+
+    function ShopifyBuyInit() {
+      var client = ShopifyBuy.buildClient({
+        domain: 'tyfukc-4b.myshopify.com',
+        storefrontAccessToken: 'a8413ee5dde4253704b93932cee84e2a',
+      });
+
+      ShopifyBuy.UI.onReady(client).then(function (ui) {
+        ui.createComponent('product', {
+          id: '7744097550379', // ID del producto SOBRE en Shopify
+          node: document.getElementById('product-component-1763861359099'),
+          moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
+          options: {
+            product: {
+              contents: {
+                img: false,
+                imgWithCarousel: false,
+                title: false,
+                price: false,
+                description: false,
+                quantity: false,
+                options: true
+              },
+              styles: {
+                product: {
+                  "box-shadow": "none",
+                  "background-color": "transparent",
+                  "border": "none",
+                  "text-align": "center"
+                },
+                button: {
+                  "background-color": "#5c1695",
+                  "border-radius": "30px",
+                  "padding": "12px 24px",
+                  "font-weight": "bold",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                button: "COMPRAR AHORA"
+              }
+            },
+
+            option: {
+              styles: {
+                wrapper: {
+                  "background-color": "transparent",
+                  "border": "none",
+                  "box-shadow": "none",
+                  "padding": "0",
+                  "margin": "0 0 12px 0"
+                },
+                label: {
+                  "color": "#ddd",
+                  "font-size": "12px",
+                  "letter-spacing": "2px",
+                  "text-transform": "uppercase",
+                  "margin-bottom": "6px",
+                  "font-weight": "300",
+                  "text-align": "left"
+                },
+                select: {
+                  "background-color": "#2e2e2e",
+                  "border": "1px solid #2e2e2e",
+                  "border-radius": "6px",
+                  "color": "#fff",
+                  "padding": "10px 14px",
+                  "font-size": "14px",
+                  "text-align": "center",
+                  "margin-bottom": "16px",
+                  "outline": "none",
+                  "appearance": "none",
+                  "-webkit-appearance": "none",
+                  "-moz-appearance": "none",
+                  "box-shadow": "none",
+                  "cursor": "pointer",
+                  "transition": "0.25s",
+                  "width": "100%",
+                  ":hover": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a"
+                  },
+                  ":focus": {
+                    "background-color": "#3a3a3a",
+                    "border-color": "#3a3a3a",
+                    "box-shadow": "none",
+                    "outline": "none"
+                  }
+                }
+              }
+            },
+
+            cart: {
+              styles: {
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                title: "Carrito",
+                total: "TOTAL",
+                empty: "Tu carrito está vacío",
+                notice: "",
+                button: "Comprar"
+              }
+            },
+
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              }
+            },
+
+            modalProduct: {
+              contents: {
+                img: true,
+                imgWithCarousel: true,
+                button: false,
+                buttonWithQuantity: true,
+                options: true
+              },
+              styles: {
+                product: {
+                  "@media (min-width: 601px)": {
+                    "max-width": "100%",
+                    "margin-left": "0px",
+                    "margin-bottom": "0px"
+                  }
+                },
+                button: {
+                  "background-color": "#5c1695",
+                  ":hover": { "background-color": "#9c25fd" },
+                  ":focus": { "background-color": "#9c25fd" }
+                }
+              },
+              text: {
+                button: "Agregar al carrito"
+              }
+            }
+          }
+        });
+      });
+    }
+  })();
+  </script>
+
+</body>
+</html>
