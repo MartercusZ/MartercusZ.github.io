@@ -18,13 +18,6 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      background-color: #000;
-    }
-
-    /* Fondo estático para Safari en iOS */
-    body.safari-static-bg {
-      background: #000 url("material/buzo violeta/SaveClip.App_491466138_17953559660948282_4110842925156818103_n.jpg")
-        center center / cover no-repeat fixed;
     }
 
     .video-fondo {
@@ -36,7 +29,6 @@
       object-fit: cover;
       opacity: 70%;
       z-index: -2;
-      pointer-events: none; /* que no se pueda tocar */
     }
 
     .overlay {
@@ -136,9 +128,8 @@
 
 <body>
 
-  <!-- 🎥 VIDEO DE FONDO (solo para navegadores que no sean Safari iOS) -->
-  <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline preload="auto">
-    <source src="material/buzo violeta/Fondo video Velocidad luz neón brillante HD.mp4" type="video/mp4" />
+  <video class="video-fondo" autoplay muted loop playsinline>
+    <source src="material/buzo violeta/fondoV.mp4" type="video/mp4" />
     Tu navegador no soporta video.
   </video>
 
@@ -157,12 +148,15 @@
     <div class="galeria-fotos">
       <div style="display: flex; flex-direction: column; align-items: center;">
         <button class="flecha" onclick="cambiarFoto(-1)">&#8592;</button>
-        <img id="fotoBuzo" src="material/buzo violeta/SaveClip.App_491466138_17953559660948282_4110842925156818103_n.jpg" alt="Violeta 1">
+
+        <!-- FOTO INICIAL AHORA = 1.jpg -->
+        <img id="fotoBuzo" src="material/buzo violeta/1.jpg" alt="Violeta 1">
+
         <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
       </div>
 
-      <video autoplay muted loop playsinline webkit-playsinline>
-        <source src="material/buzo violeta/IMG_7486.MP4" type="video/mp4" />
+      <video autoplay muted loop playsinline>
+        <source src="material/buzo violeta/video2.MP4" type="video/mp4" />
         Tu navegador no soporta video.
       </video>
     </div>
@@ -192,12 +186,14 @@
 
   </section>
 
-  <!-- Galería -->
+  <!-- GALERÍA: AHORA USA 1,2,3,4 -->
   <script>
     const fotos = [
-      "material/buzo violeta/IMG_8380.jpeg",
-      "material/buzo violeta/fotoing.jpg",
-      "material/buzo violeta/SaveClip.App_491466138_17953559660948282_4110842925156818103_n.jpg"
+      "material/buzo violeta/1.jpg",
+      "material/buzo violeta/2.jpg",
+      "material/buzo violeta/3.jpg",
+      "material/buzo violeta/5.jpg"
+
     ];
 
     let index = 0;
@@ -210,25 +206,6 @@
     }
   </script>
 
-  <!-- 🕵️ Detectar Safari en iOS y desactivar el video de fondo -->
-  <script>
-    (function() {
-      const ua = navigator.userAgent || navigator.vendor || window.opera;
-
-      const isIOS = /iPhone|iPad|iPod/i.test(ua);
-      const isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/i.test(ua);
-
-      if (isIOS && isSafari) {
-        document.body.classList.add('safari-static-bg');
-        const videoFondo = document.querySelector('.video-fondo');
-        if (videoFondo) {
-          videoFondo.parentNode.removeChild(videoFondo);
-        }
-      }
-    })();
-  </script>
-
-  <!-- Shopify -->
   <script type="text/javascript">
     (function () {
       var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
