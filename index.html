@@ -4,8 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOTY</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* FONDO ESTÁTICO SOLO PARA IPHONE */
+    body.ios-static-bg {
+      background: #000 url("material/portada.jpg") center center / cover no-repeat fixed;
+    }
+
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .video-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
+    }
+  </style>
 </head>
+
 <body>
 
   <header>
@@ -16,12 +84,30 @@
   </header>
 
   <section class="video-section">
-    <video autoplay muted loop playsinline>
+    <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline>
       <source src="material/video.mp4" type="video/mp4" />
-      Tu navegador no soporta video.
     </video>
     <div class="overlay"></div>
   </section>
+
+  <!-- DETECTAR IPHONE / SAFARI -->
+  <script>
+    (function() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/i.test(ua);
+
+      if (isIOS && isSafari) {
+        // Agrega fondo estático
+        document.body.classList.add('ios-static-bg');
+
+        // Eliminar el video para que no pida "play"
+        const video = document.querySelector(".video-fondo");
+        if (video) video.remove();
+      }
+    })();
+  </script>
 
 </body>
 </html>
