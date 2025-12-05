@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Básicos - TOTY</title>
-    <link rel="icon" type="image/png" href="favicon.jpg">
-
   <style>
     * {
       margin: 0;
@@ -52,14 +50,13 @@
       z-index: 1;
     }
 
-     .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  color: white;
-}
-
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-decoration: none;
+      color: white;
+    }
 
     nav a {
       color: white;
@@ -107,6 +104,18 @@
       transform: translateY(-5px);
     }
 
+    /* 👉 Para que el link de T1 no sea azul ni subrayado */
+    .producto-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .producto-link:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .producto img {
       width: auto;
       max-width: 100%;
@@ -122,8 +131,9 @@
       font-size: 1.1rem;
       color: white;
     }
-    .precio{
-        font-family: sans-serif;
+
+    .precio {
+      font-family: sans-serif;
     }
 
     .producto p {
@@ -143,7 +153,7 @@
 
   <!-- 🎥 VIDEO DE FONDO -->
   <video class="video-fondo" autoplay muted loop playsinline>
-    <source src="material/basicos//videofondo.mp4" type="video/mp4" />
+    <source src="material/basicos/videofondo.mp4" type="video/mp4" />
     Tu navegador no soporta video.
   </video>
 
@@ -151,7 +161,7 @@
 
   <!-- 🖤 HEADER -->
   <header>
-  <a href="index.html" class="logo" id="logoToty">TOTY</a>
+    <a href="index.html" class="logo" id="logoToty">TOTY</a>
     <nav>
       <a href="index.html">INICIO</a>
     </nav>
@@ -162,13 +172,13 @@
 
   <!-- 📸 GALERÍA -->
   <section class="galeria">
-  <!-- PRODUCTO 1: T1 CON LINK -->
-  <a href="t1.html" class="producto producto-link">
-    <img src="material/basicos/T1/T1.jpg" alt="T1 - Buzo Básico Negro" />
-    <h3>Take Opportunities, Trust Yourself.</h3>
-    <p>Street pero de lujo </p>
-    <p class="precio">$690</p>
-  </a>
+    <!-- PRODUCTO 1: T1 CON LINK -->
+    <a href="t1.html" class="producto producto-link">
+      <img src="material/basicos/T1/T1.jpg" alt="T1 - Buzo Básico Negro" />
+      <h3>Take Opportunities, Trust Yourself.</h3>
+      <p>Street pero de lujo</p>
+      <p class="precio">$550</p>
+    </a>
 
     <div class="producto">
       <img src="material/basicos/cremita.png" alt="Buzo Básico 2" />
@@ -181,20 +191,16 @@
       <img src="material/basicos/blanco.png" alt="Buzo Básico 3" />
       <h3>BLANCO CLÁSICO</h3>
       <p>Minimalismo en su máxima expresión.</p>
-            <p class="precio">$550</p>
-
+      <p class="precio">$550</p>
     </div>
 
     <div class="producto">
       <img src="material/basicos/verde marron.png" alt="Buzo Básico 4" />
       <h3>VERDE TERROSO</h3>
       <p>Color vino profundo, presencia asegurada.</p>
-            <p class="precio">$550</p>
-
+      <p class="precio">$550</p>
     </div>
   </section>
 
 </body>
 </html>
-
-
