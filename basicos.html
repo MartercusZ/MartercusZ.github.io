@@ -50,11 +50,14 @@
       z-index: 1;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
+     .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: white;
+}
+
 
     nav a {
       color: white;
@@ -146,7 +149,7 @@
 
   <!-- 🖤 HEADER -->
   <header>
-    <div class="logo">TOTY</div>
+  <a href="index.html" class="logo" id="logoToty">TOTY</a>
     <nav>
       <a href="index.html">INICIO</a>
     </nav>
@@ -157,13 +160,13 @@
 
   <!-- 📸 GALERÍA -->
   <section class="galeria">
-    <div class="producto">
-      <img src="material/basicos/negro.png" alt="Buzo Básico 1" />
-      <h3>NEGRO PURO</h3>
-      <p>Buzo liso con corte oversize. Confort absoluto.</p>
-            <p class="precio">$550</p>
-
-    </div>
+  <!-- PRODUCTO 1: T1 CON LINK -->
+  <a href="t1.html" class="producto producto-link">
+    <img src="material/basicos/T1/T1.jpg" alt="T1 - Buzo Básico Negro" />
+    <h3>Take Opportunities, Trust Yourself.</h3>
+    <p>Street pero de lujo </p>
+    <p class="precio">$550</p>
+  </a>
 
     <div class="producto">
       <img src="material/basicos/cremita.png" alt="Buzo Básico 2" />
