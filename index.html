@@ -120,13 +120,14 @@
 
     /* ===== iPhone/Safari: HERO distinto (portada + destacados 2x2 arriba) ===== */
     body.is-ios .video-section{
-      height: auto;               /* clave: no forzar 100vh */
+      height: auto;
       min-height: 0;
       background: #000 url("material/portada.jpg") center center / cover no-repeat;
-      padding: 56px 14px 18px 14px; /* aire premium */
+      padding: 56px 14px 18px 14px;
     }
 
     body.is-ios video{ display:none; }
+
     body.is-ios .overlay{
       position:absolute;
       inset:0;
@@ -183,7 +184,7 @@
 
     .ios-card img{
       width: 100%;
-      aspect-ratio: 1 / 1;   /* cuadrado -> siempre prolijo */
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       display:block;
     }
@@ -293,6 +294,11 @@
       opacity:.7;
       border-top: 1px solid rgba(255,255,255,.08);
     }
+
+    /* ✅ En iPhone/Safari: NO repetir destacados abajo */
+    body.is-ios #destacados{
+      display: none;
+    }
   </style>
 </head>
 
@@ -330,6 +336,7 @@
     </div>
   </section>
 
+  <!-- Sección normal (solo desktop/Android). En iPhone se oculta por CSS. -->
   <section class="section" id="destacados">
     <h2>Productos destacados</h2>
     <p class="sub">Tocá un producto y entrás.</p>
@@ -363,7 +370,7 @@
       { id: "sobre", name: "SOBRE", price: "$3.100", img: "material/buzo sobre/1.jpg", desc: "Una pieza directa, elegante y con intención." }
     ];
 
-    // Grilla normal (sección de destacados)
+    // Grilla normal (solo se ve fuera de iPhone Safari)
     const grid = document.getElementById("featuredGrid");
     if (grid) {
       grid.innerHTML = featuredProducts.map(p => `
