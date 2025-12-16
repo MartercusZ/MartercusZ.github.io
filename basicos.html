@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Básicos - TOTY</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -19,7 +15,6 @@
       overflow-x: hidden;
     }
 
-    /* 🎥 Video fondo */
     .video-fondo {
       position: fixed;
       top: 0;
@@ -100,11 +95,8 @@
       padding: 10px;
     }
 
-    .producto:hover {
-      transform: translateY(-5px);
-    }
+    .producto:hover { transform: translateY(-5px); }
 
-    /* 👉 Para que el link de T1 no sea azul ni subrayado */
     .producto-link {
       text-decoration: none;
       color: inherit;
@@ -132,9 +124,7 @@
       color: white;
     }
 
-    .precio {
-      font-family: sans-serif;
-    }
+    .precio { font-family: sans-serif; }
 
     .producto p {
       font-size: 0.9rem;
@@ -143,15 +133,12 @@
     }
 
     @media (max-width: 600px) {
-      .producto img {
-        max-height: 180px;
-      }
+      .producto img { max-height: 180px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎥 VIDEO DE FONDO -->
   <video class="video-fondo" autoplay muted loop playsinline>
     <source src="material/basicos/videofondo.mp4" type="video/mp4" />
     Tu navegador no soporta video.
@@ -159,7 +146,6 @@
 
   <div class="overlay"></div>
 
-  <!-- 🖤 HEADER -->
   <header>
     <a href="index.html" class="logo" id="logoToty">TOTY</a>
     <nav>
@@ -170,20 +156,14 @@
   <h1>BÁSICOS</h1>
   <p class="descripcion">Diseños simples, materiales nobles. Nuestra línea más esencial, pero igual de única.</p>
 
-  <!-- 📸 GALERÍA -->
   <section class="galeria">
-    <!-- PRODUCTO 1: T1 CON LINK -->
     <a href="t1.html" class="producto producto-link">
       <img src="material/basicos/T1/T1.jpg" alt="T1 - Buzo Básico Negro" />
       <h3>Take Opportunities, Trust Yourself.</h3>
       <p>Street pero de lujo</p>
       <p class="precio">$690</p>
     </a>
-
-  
   </section>
 
 </body>
 </html>
-
-
