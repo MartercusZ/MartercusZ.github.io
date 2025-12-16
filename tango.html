@@ -4,14 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TANGO - TOTY</title>
-    <link rel="icon" type="image/png" href="favicon.jpg">
+  <link rel="icon" type="image/png" href="favicon.jpg">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -19,32 +15,28 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      background-color: #000; /* base */
+      background-color: #000;
     }
 
-    /* clase que usaremos SOLO en Safari (imagen de fondo) */
+    /* SOLO Safari iOS: imagen fija */
     body.safari-static-bg {
       background: #000 url("material/buzo negro/IMG_2158.JPG") center center / cover no-repeat fixed;
     }
 
     .video-fondo {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       object-fit: cover;
       opacity: 0.4;
       z-index: -2;
-      pointer-events: none; /* que no se pueda tocar */
+      pointer-events: none;
     }
 
     .overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
@@ -59,14 +51,13 @@
       position: relative;
     }
 
- .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  color: white;
-}
-
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-decoration: none;
+      color: white;
+    }
 
     nav a {
       color: white;
@@ -87,37 +78,65 @@
       margin-bottom: 30px;
     }
 
+    /* ====== GALERÍA: FOTO | THUMBS EN MEDIO | VIDEO ====== */
     .galeria-fotos {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: center;
-      gap: 30px;
+      align-items: flex-start; /* misma línea arriba */
+      gap: 18px;
       margin-bottom: 30px;
+      flex-wrap: nowrap;
     }
 
-    .galeria-fotos img,
+    .foto-principal,
     .galeria-fotos video {
       width: 450px;
       height: 450px;
       max-width: 90vw;
       object-fit: cover;
-      background-color: transparent;
       border-radius: 10px;
       border: 1px solid #333;
+      background: transparent;
+      display: block;
     }
 
-    .flecha {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2.5rem;
+    /* Miniaturas al medio (columna) */
+    .thumbs {
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 6px 4px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .thumbs::-webkit-scrollbar { display: none; }
+
+    .thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      overflow: hidden;
       cursor: pointer;
-      transition: color 0.3s ease;
+      opacity: 0.6;
+      transition: 0.18s ease;
+      background: rgba(0,0,0,0.25);
     }
 
-    .flecha:hover {
-      color: gray;
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb.activa {
+      opacity: 1;
+      border-color: #ddd;
+      transform: translateY(-1px);
     }
 
     .detalle p {
@@ -129,16 +148,71 @@
 
     .boton-comprar {
       display: flex;
-      flex-direction: column;   /* texto "Talle" + selector + botón */
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 10px;
+    }
+
+    /* PRECIO ABAJO DE LA DESCRIPCIÓN */
+    .precio-producto {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 4px 0 12px;
+    }
+
+    /* LABEL "TALLE" ABAJO DEL PRECIO */
+    .label-talle {
+      color:#ddd;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:8px;
+      font-weight:300;
+      text-align:center;
+      
+    }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 980px) {
+      .galeria-fotos {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .thumbs {
+        height: auto;
+        width: 92vw;
+        max-width: 450px;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        justify-content: flex-start;
+      }
+
+      .thumb {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .foto-principal,
+      .galeria-fotos video {
+        width: 92vw;
+        height: 92vw;
+        max-height: 420px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- 🎥 VIDEO DE FONDO (para navegadores que no son Safari móvil) -->
+  <!-- VIDEO FONDO -->
   <video class="video-fondo" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="material/buzo negro/fondo.mp4" type="video/mp4" />
     Tu navegador no soporta video.
@@ -147,7 +221,7 @@
   <div class="overlay"></div>
 
   <header>
-  <a href="index.html" class="logo" id="logoToty">TOTY</a>
+    <a href="index.html" class="logo" id="logoToty">TOTY</a>
     <nav>
       <a href="catalogo.html">VOLVER AL CATÁLOGO</a>
     </nav>
@@ -157,12 +231,13 @@
     <h2>TANGO</h2>
 
     <div class="galeria-fotos">
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <button class="flecha" onclick="cambiarFoto(-1)">&#8592;</button>
-        <img id="fotoBuzo" src="material/buzo negro/IMG_2158.JPG" alt="TANGO 1">
-        <button class="flecha" onclick="cambiarFoto(1)">&#8594;</button>
-      </div>
+      <!-- FOTO -->
+      <img id="fotoBuzo" class="foto-principal" src="material/buzo negro/IMG_2158.JPG" alt="TANGO 1">
 
+      <!-- MINIATURAS EN EL MEDIO -->
+      <div class="thumbs" id="thumbs"></div>
+
+      <!-- VIDEO (no lo toco) -->
       <video autoplay muted loop playsinline webkit-playsinline>
         <source src="material/buzo negro/v09044g40000d1c9dmvog65se6pethb0 (1).MP4" type="video/mp4" />
         Tu navegador no soporta video.
@@ -170,27 +245,18 @@
     </div>
 
     <p>
-Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bordado sutil en el pecho, otro imponente en la espalda. Las mangas y costuras acompañan con relieve, mientras dos ajustadores permiten moldearlo al cuerpo o al momento. Una pieza de street con lujo: precisa, atrevida y hecha para destacar sin necesidad de hablar.    </p>
+      Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bordado sutil en el pecho, otro imponente en la espalda. Las mangas y costuras acompañan con relieve, mientras dos ajustadores permiten moldearlo al cuerpo o al momento. Una pieza de street con lujo: precisa, atrevida y hecha para destacar sin necesidad de hablar.
+    </p>
 
-    <!-- BOTÓN SHOPIFY -->
+    <!-- PRECIO + TALLE + SHOPIFY -->
     <div class="boton-comprar">
-      <p style="
-        color:#ddd;
-        font-size:12px;
-        letter-spacing:2px;
-        text-transform:uppercase;
-        margin-bottom:6px;
-        font-weight:300;
-        text-align:center;
-      ">
-        Talle
-      </p>
-
+      <div class="precio-producto">$3000</div>
+      <div class="label-talle">Talle</div>
       <div id="product-component-1763380930645"></div>
     </div>
   </section>
 
-  <!-- Script galería de fotos -->
+  <!-- Script miniaturas -->
   <script>
     const fotos = [
       "material/buzo negro/IMG_2158.JPG",
@@ -203,34 +269,45 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
 
     let index = 0;
 
-    function cambiarFoto(direccion) {
-      index += direccion;
-      if (index < 0) index = fotos.length - 1;
-      if (index >= fotos.length) index = 0;
-      document.getElementById("fotoBuzo").src = fotos[index];
+    const fotoBuzo = document.getElementById("fotoBuzo");
+    const thumbs = document.getElementById("thumbs");
+
+    function setFoto(i) {
+      index = i;
+      fotoBuzo.src = fotos[index];
+
+      [...thumbs.children].forEach((el, idx) => {
+        el.classList.toggle("activa", idx === index);
+      });
     }
+
+    fotos.forEach((src, i) => {
+      const t = document.createElement("div");
+      t.className = "thumb" + (i === 0 ? " activa" : "");
+      t.innerHTML = `<img src="${src}" alt="thumb ${i + 1}">`;
+      t.addEventListener("click", () => setFoto(i));
+      thumbs.appendChild(t);
+    });
+
+    setFoto(0);
   </script>
 
-  <!-- 🕵️ Detectar Safari (sobre todo en iOS) y desactivar el video de fondo -->
+  <!-- Detectar Safari iOS y desactivar video de fondo -->
   <script>
     (function() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
-
       const isIOS = /iPhone|iPad|iPod/i.test(ua);
       const isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/i.test(ua);
 
       if (isIOS && isSafari) {
-        // Safari en iPhone/iPad → usamos imagen de fondo
         document.body.classList.add('safari-static-bg');
         const videoFondo = document.querySelector('.video-fondo');
-        if (videoFondo) {
-          videoFondo.parentNode.removeChild(videoFondo);
-        }
+        if (videoFondo) videoFondo.remove();
       }
     })();
   </script>
 
-  <!-- Script de Shopify: botón + talles + carrito -->
+  <!-- Shopify Buy Button -->
   <script type="text/javascript">
   (function () {
     var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
@@ -261,7 +338,7 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
 
       ShopifyBuy.UI.onReady(client).then(function (ui) {
         ui.createComponent('product', {
-          id: '7728744398891', // ID del producto TANGO en Shopify
+          id: '7728744398891',
           node: document.getElementById('product-component-1763380930645'),
           moneyFormat: '%24%7B%7Bamount_with_comma_separator%7D%7D',
           options: {
@@ -270,7 +347,7 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
                 img: false,
                 imgWithCarousel: false,
                 title: false,
-                price: false,
+                price: false,      /* ❌ precio lo mostramos nosotros ($3000) */
                 description: false,
                 quantity: false,
                 options: true
@@ -291,9 +368,7 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
                   ":focus": { "background-color": "#9c25fd" }
                 }
               },
-              text: {
-                button: "COMPRAR AHORA"
-              }
+              text: { button: "COMPRAR AHORA" }
             },
 
             option: {
@@ -306,20 +381,14 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
                   "margin": "0 0 12px 0"
                 },
                 label: {
-                  "color": "#ddd",
-                  "font-size": "12px",
-                  "letter-spacing": "2px",
-                  "text-transform": "uppercase",
-                  "margin-bottom": "6px",
-                  "font-weight": "300",
-                  "text-align": "left"
+                  "display": "none"  /* ✅ oculto label interno, usás tu "Talle" */
                 },
                 select: {
                   "background-color": "#2e2e2e",
                   "border": "1px solid #2e2e2e",
-                  "border-radius": "6px",
+                  "border-radius": "10px",
                   "color": "#fff",
-                  "padding": "10px 14px",
+                  "padding": "12px 14px",
                   "font-size": "14px",
                   "text-align": "center",
                   "margin-bottom": "16px",
@@ -331,16 +400,8 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
                   "cursor": "pointer",
                   "transition": "0.25s",
                   "width": "100%",
-                  ":hover": {
-                    "background-color": "#3a3a3a",
-                    "border-color": "#3a3a3a"
-                  },
-                  ":focus": {
-                    "background-color": "#3a3a3a",
-                    "border-color": "#3a3a3a",
-                    "box-shadow": "none",
-                    "outline": "none"
-                  }
+                  ":hover": { "background-color": "#3a3a3a", "border-color": "#3a3a3a" },
+                  ":focus": { "background-color": "#3a3a3a", "border-color": "#3a3a3a", "box-shadow": "none", "outline": "none" }
                 }
               }
             },
@@ -394,9 +455,7 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
                   ":focus": { "background-color": "#9c25fd" }
                 }
               },
-              text: {
-                button: "Agregar al carrito"
-              }
+              text: { button: "Agregar al carrito" }
             }
           }
         });
@@ -406,7 +465,3 @@ Buzo en lino negro, donde cada textura fue pensada como parte de una obra. Un bo
   </script>
 </body>
 </html>
-
-
-
-
