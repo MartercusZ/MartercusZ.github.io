@@ -43,18 +43,13 @@
       opacity: .95;
     }
 
-    /* HERO */
+    /* HERO (desktop / android / etc con video) */
     .video-section{
       position: relative;
       width: 100%;
       height: 100vh;
       overflow: hidden;
       display: block;
-    }
-
-    /* En iOS usamos portada */
-    .video-section.ios-no-video{
-      background: #000 url("material/portada.jpg") center center / cover no-repeat;
     }
 
     video{
@@ -66,8 +61,6 @@
       left: 0;
       z-index: -2;
     }
-
-    .video-section.ios-no-video video{ display:none; }
 
     .overlay{
       position: absolute;
@@ -86,12 +79,10 @@
       text-align:center;
       padding: 0 20px;
       z-index: 1;
-      pointer-events:none;
     }
 
     .hero-box{
       max-width: 820px;
-      pointer-events:auto;
     }
 
     .hero-box p{
@@ -119,7 +110,6 @@
       background: rgba(0,0,0,.35);
       backdrop-filter: blur(6px);
       color: white;
-      pointer-events:auto;
     }
 
     .btn.primary{
@@ -128,51 +118,64 @@
       border-color: white;
     }
 
-    /* ===== iOS: destacados dentro del primer pantallazo (RESPONSIVE) ===== */
-    .ios-featured{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom: calc(12px + env(safe-area-inset-bottom));
-      padding: 0 14px;
-      z-index: 2;
-      display:none;
-      pointer-events:auto;
+    /* ===== iPhone/Safari: HERO distinto (portada + destacados 2x2 arriba) ===== */
+    body.is-ios .video-section{
+      height: auto;               /* clave: no forzar 100vh */
+      min-height: 0;
+      background: #000 url("material/portada.jpg") center center / cover no-repeat;
+      padding: 56px 14px 18px 14px; /* aire premium */
     }
 
-    body.is-ios .ios-featured{ display:block; }
-
-    body.is-ios .video-section{ height: 92vh; }
     body.is-ios video{ display:none; }
+    body.is-ios .overlay{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.72);
+    }
 
-    .ios-featured .label{
+    body.is-ios .hero-content{
+      position: relative;
+      padding: 24px 0 14px 0;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    body.is-ios .cta-row{
+      margin-top: 14px;
+    }
+
+    /* En iPhone: destacados dentro del hero, grilla premium */
+    .ios-featured-grid{
+      display:none;
+      position: relative;
+      z-index: 2;
+      margin-top: 14px;
+    }
+
+    body.is-ios .ios-featured-grid{
+      display:block;
+    }
+
+    .ios-label{
+      font-weight: 800;
+      letter-spacing: .6px;
+      font-size: .95rem;
+      opacity: .95;
       text-align:left;
-      font-weight:800;
-      letter-spacing:.6px;
-      font-size: .92rem;
-      margin-bottom: 8px;
-      opacity:.95;
+      margin-bottom: 10px;
     }
 
-    .ios-strip{
-      display:flex;
+    .ios-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 6px;
-      padding-right: 10px;
     }
-
-    .ios-strip::-webkit-scrollbar{ display:none; }
 
     .ios-card{
-      flex: 0 0 auto;
-      width: min(78vw, 320px);
-      scroll-snap-align: start;
+      display:block;
       text-decoration:none;
       color:white;
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.14);
       border-radius: 16px;
       overflow:hidden;
       background: rgba(255,255,255,.06);
@@ -180,39 +183,34 @@
 
     .ios-card img{
       width: 100%;
-      aspect-ratio: 4 / 3;
-      height: auto;
+      aspect-ratio: 1 / 1;   /* cuadrado -> siempre prolijo */
       object-fit: cover;
       display:block;
     }
 
     .ios-card .meta{
-      padding: 10px 12px 12px 12px;
+      padding: 10px 10px 12px 10px;
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      gap: 10px;
       align-items:flex-start;
     }
 
     .ios-card .name{
-      font-weight:800;
-      letter-spacing:.4px;
-      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .4px;
+      font-size: .9rem;
+      line-height: 1.1;
     }
 
     .ios-card .price{
-      opacity:.85;
-      font-weight:700;
-      white-space:nowrap;
-      font-size: .95rem;
+      opacity: .82;
+      font-weight: 700;
+      font-size: .9rem;
+      white-space: nowrap;
     }
 
-    @media (max-width: 390px){
-      .ios-card{ width: 82vw; }
-      .ios-card .name, .ios-card .price{ font-size: .92rem; }
-    }
-
-    /* SECCIONES */
+    /* SECCIONES (resto de la página) */
     .section{
       padding: 56px 20px;
       max-width: 1200px;
@@ -242,7 +240,6 @@
       header{ padding: 16px 18px; }
     }
 
-    /* CARD CLICKEABLE */
     .card-link{
       display:block;
       text-decoration:none;
@@ -318,17 +315,18 @@
     <div class="hero-content">
       <div class="hero-box">
         <p>Vestite como quieras, pero que sea TOTY</p>
+
         <div class="cta-row">
           <a class="btn primary" href="#destacados">VER DESTACADOS</a>
           <a class="btn" href="catalogo.html">CATÁLOGO COMPLETO</a>
         </div>
-      </div>
-    </div>
 
-    <!-- iPhone: destacados en el primer pantallazo (swipe) -->
-    <div class="ios-featured" id="iosFeatured">
-      <div class="label">Destacados</div>
-      <div class="ios-strip" id="iosStrip"></div>
+        <!-- iPhone: destacados arriba, grilla 2x2 -->
+        <div class="ios-featured-grid" id="iosFeaturedGrid">
+          <div class="ios-label">Destacados</div>
+          <div class="ios-grid" id="iosGrid"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -347,7 +345,7 @@
   </footer>
 
   <script>
-    // Detectar iOS Safari
+    // Detectar iOS Safari (solo para cambiar layout)
     (function() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       const isIOS = /iPhone|iPad|iPod/i.test(ua);
@@ -355,12 +353,9 @@
 
       if (isIOS && isSafari) {
         document.body.classList.add("is-ios");
-        const vs = document.getElementById("videoSection");
-        if (vs) vs.classList.add("ios-no-video");
       }
     })();
 
-    // Destacados (misma data para grilla y para iOS)
     const featuredProducts = [
       { id: "tango", name: "TANGO", price: "$3.100", img: "material/buzo negro/IMG_2158.JPG", desc: "Lino, bordados, textura y elegancia" },
       { id: "grays", name: "GRAYS", price: "$3.100", img: "material/buzo gris/SaveClip.App_451575151_7862133527204979_7448834506020092258_n.jpg", desc: "Simple y sencillo, eso es lo que se quiere" },
@@ -368,7 +363,7 @@
       { id: "sobre", name: "SOBRE", price: "$3.100", img: "material/buzo sobre/1.jpg", desc: "Una pieza directa, elegante y con intención." }
     ];
 
-    // Grilla normal (abajo)
+    // Grilla normal (sección de destacados)
     const grid = document.getElementById("featuredGrid");
     if (grid) {
       grid.innerHTML = featuredProducts.map(p => `
@@ -383,10 +378,10 @@
       `).join("");
     }
 
-    // iOS strip (dentro del hero)
-    const iosStrip = document.getElementById("iosStrip");
-    if (document.body.classList.contains("is-ios") && iosStrip) {
-      iosStrip.innerHTML = featuredProducts.map(p => `
+    // iPhone grid (2x2 arriba)
+    const iosGrid = document.getElementById("iosGrid");
+    if (document.body.classList.contains("is-ios") && iosGrid) {
+      iosGrid.innerHTML = featuredProducts.map(p => `
         <a class="ios-card" href="catalogo.html?product=${encodeURIComponent(p.id)}" aria-label="Ver ${p.name}">
           <img src="${p.img}" alt="${p.name}">
           <div class="meta">
