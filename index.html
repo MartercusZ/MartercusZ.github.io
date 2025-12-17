@@ -124,8 +124,8 @@
       min-height: 0;
       background: #000 url("material/portada.jpg") center center / cover no-repeat;
 
-      /* ✅ más aire arriba para que se vea más la foto */
-      padding: 96px 14px 18px 14px; /* antes: 56px 14px 18px 14px */
+      /* más aire arriba para ver más la foto */
+      padding: 96px 14px 18px 14px;
     }
 
     body.is-ios video{ display:none; }
@@ -152,9 +152,7 @@
       display:none;
       position: relative;
       z-index: 2;
-
-      /* ✅ bajamos la grilla ~5cm (aprox) */
-      margin-top: 56px; /* antes: 14px */
+      margin-top: 56px; /* bajada para que se vea más portada */
     }
 
     body.is-ios .ios-featured-grid{
@@ -327,8 +325,7 @@
         <p>Vestite como quieras, pero que sea TOTY</p>
 
         <div class="cta-row">
-          <a class="btn primary" href="#destacados">VER DESTACADOS</a>
-          <a class="btn" href="catalogo.html">CATÁLOGO COMPLETO</a>
+          <a class="btn primary" href="catalogo.html">CATÁLOGO COMPLETO</a>
         </div>
 
         <!-- iPhone: destacados arriba, grilla 2x2 -->
@@ -367,18 +364,19 @@
       }
     })();
 
+    // ✅ Ahora cada destacado va DIRECTO al producto (url del HTML)
     const featuredProducts = [
-      { id: "tango", name: "TANGO", price: "$3.100", img: "material/buzo negro/IMG_2158.JPG", desc: "Lino, bordados, textura y elegancia" },
-      { id: "grays", name: "GRAYS", price: "$3.100", img: "material/buzo gris/SaveClip.App_451575151_7862133527204979_7448834506020092258_n.jpg", desc: "Simple y sencillo, eso es lo que se quiere" },
-      { id: "presencia-violeta", name: "PRESENCIA VIOLETA", price: "$3.100", img: "material/buzo violeta/4.jpg", desc: "Texturas al punto de hartarte." },
-      { id: "sobre", name: "SOBRE", price: "$3.100", img: "material/buzo sobre/1.jpg", desc: "Una pieza directa, elegante y con intención." }
+      { url: "tango.html", name: "TANGO", price: "$3.100", img: "material/buzo negro/IMG_2158.JPG", desc: "Lino, bordados, textura y elegancia" },
+      { url: "grays.html", name: "GRAYS", price: "$3.100", img: "material/buzo gris/SaveClip.App_451575151_7862133527204979_7448834506020092258_n.jpg", desc: "Simple y sencillo, eso es lo que se quiere" },
+      { url: "presenciaVioleta.html", name: "PRESENCIA VIOLETA", price: "$3.100", img: "material/buzo violeta/4.jpg", desc: "Texturas al punto de hartarte." },
+      { url: "sobre.html", name: "SOBRE", price: "$3.100", img: "material/buzo sobre/1.jpg", desc: "Una pieza directa, elegante y con intención." }
     ];
 
-    // Grilla normal (solo se ve fuera de iPhone Safari)
+    // Grilla normal (desktop/Android)
     const grid = document.getElementById("featuredGrid");
     if (grid) {
       grid.innerHTML = featuredProducts.map(p => `
-        <a class="card-link" href="catalogo.html?product=${encodeURIComponent(p.id)}" aria-label="Ver ${p.name}">
+        <a class="card-link" href="${p.url}" aria-label="Ver ${p.name}">
           <img src="${p.img}" alt="${p.name}">
           <div class="info">
             <div class="name">${p.name}</div>
@@ -393,7 +391,7 @@
     const iosGrid = document.getElementById("iosGrid");
     if (document.body.classList.contains("is-ios") && iosGrid) {
       iosGrid.innerHTML = featuredProducts.map(p => `
-        <a class="ios-card" href="catalogo.html?product=${encodeURIComponent(p.id)}" aria-label="Ver ${p.name}">
+        <a class="ios-card" href="${p.url}" aria-label="Ver ${p.name}">
           <img src="${p.img}" alt="${p.name}">
           <div class="meta">
             <div class="name">${p.name}</div>
