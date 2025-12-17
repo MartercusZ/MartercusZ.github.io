@@ -20,14 +20,13 @@
     Nos tomamos el tiempo de crear algo especial para vos, porque no estás comprando solo una prenda, estás recibiendo un servicio.
   </h3>
 
-  <!-- 🔎 BUSCAR POR NOMBRE + CATEGORÍA (BUZOS/REMERAS) -->
   <section class="filtros" aria-label="Buscar y filtrar productos">
     <input
       id="buscador"
       type="search"
-      placeholder="Buscar por nombre: TANGO, GRAYS, SOBRE..."
+      placeholder="Buscar: TANGO, GRAYS, SOBRE… o 'buzo' / 'remera'"
       autocomplete="off"
-      aria-label="Buscar por nombre"
+      aria-label="Buscar"
     />
 
     <select id="categoria" aria-label="Filtrar por categoría">
@@ -41,7 +40,6 @@
 
   <main class="galeria" id="galeria">
 
-    <!-- TANGO (BUZO) -->
     <a href="tango.html" class="producto"
        data-category="buzos"
        data-name="tango">
@@ -50,7 +48,6 @@
       <p>Lino, bordados, textura y elegancia</p>
     </a>
 
-    <!-- GRAYS (BUZO) -->
     <a href="grays.html" class="producto"
        data-category="buzos"
        data-name="grays">
@@ -59,30 +56,26 @@
       <p>Simple y sencillo, eso es lo que se quiere</p>
     </a>
 
-    <!-- PRESENCIA VIOLETA (BUZO) -->
     <a href="presenciaVioleta.html" class="producto"
        data-category="buzos"
        data-name="presencia violeta">
-      <img src="material/buzo violeta/4.jpg" alt="Drop 3">
+      <img src="material/buzo violeta/1.jpg" alt="Drop 3">
       <h3>PRESENCIA VIOLETA</h3>
       <p>Texturas al punto de hartarte.</p>
     </a>
 
-    <!-- BASICOS (ACÁ decidís: buzos o remeras) -->
-    <!-- Si BASICOS son remeras, dejalo en "remeras". Si son buzos, cambialo a "buzos". -->
-    <a href="basicos.html" class="producto"
+    <a href="t1.html" class="producto"
        data-category="remeras"
        data-name="basicos">
-      <img src="material/basicos/perfil.jpg" alt="Basicos">
-      <h3>REMERAS</h3>
+      <img src="material/basicos/T1/T1.jpg" alt="Basicos">
+      <h3>T1</h3>
       <p>Vestite como quieras, pero que sea TOTY</p>
     </a>
 
-    <!-- SOBRE (BUZO) -->
     <a href="sobre.html" class="producto"
        data-category="buzos"
        data-name="sobre">
-      <img src="material/buzo sobre/1.jpg" alt="Buzo SOBRE">
+      <img src="material/buzo sobre/2.jpg" alt="Buzo SOBRE">
       <h3>SOBRE</h3>
       <p>Una pieza directa, elegante y con intención. Tu mensaje, tu estilo.</p>
     </a>
@@ -94,12 +87,12 @@
   </p>
 
   <script>
-    (() => {
-      const buscador = document.getElementById("buscador");
-      const categoria = document.getElementById("categoria");
-      const productos = Array.from(document.querySelectorAll(".producto"));
-      const contador = document.getElementById("contador");
-      const sinResultados = document.getElementById("sinResultados");
+    (function () {
+      var buscador = document.getElementById("buscador");
+      var categoria = document.getElementById("categoria");
+      var productos = Array.prototype.slice.call(document.querySelectorAll(".producto"));
+      var contador = document.getElementById("contador");
+      var sinResultados = document.getElementById("sinResultados");
 
       function normalizar(s) {
         return (s || "")
@@ -109,32 +102,48 @@
           .trim();
       }
 
+      function textoDe(el, selector) {
+        var n = el.querySelector(selector);
+        return n ? n.textContent : "";
+      }
+
       function filtrar() {
-        const q = normalizar(buscador.value);
-        const cat = categoria.value;
+        var q = normalizar(buscador.value);
+        var cat = categoria.value;
 
-        let visibles = 0;
+        var visibles = 0;
 
-        productos.forEach((p) => {
-          const pCat = p.dataset.category || "";
-          // ✅ Buscar SOLO por nombre
-          const nombre = normalizar(p.dataset.name || "");
+        for (var i = 0; i < productos.length; i++) {
+          var p = productos[i];
 
-          const matchCat = (cat === "all") || (pCat === cat);
-          const matchText = (q === "") || nombre.includes(q);
+          var pCat = p.getAttribute("data-category") || "";
+          var pName = p.getAttribute("data-name") || "";
+          var titulo = textoDe(p, "h3");
+          var desc = textoDe(p, "p");
 
-          const mostrar = matchCat && matchText;
+          // ✅ Este “searchBlob” incluye la categoría, así que "buzo/remera" matchea
+          var searchBlob = normalizar(pName + " " + pCat + " " + titulo + " " + desc);
+
+          var matchCat = (cat === "all") || (pCat === cat);
+          var matchText = (q === "") || (searchBlob.indexOf(q) !== -1);
+
+          var mostrar = matchCat && matchText;
+
           p.style.display = mostrar ? "" : "none";
-
           if (mostrar) visibles++;
-        });
+        }
 
-        contador.textContent = `${visibles} producto${visibles === 1 ? "" : "s"}`;
+        contador.textContent = visibles + " producto" + (visibles === 1 ? "" : "s");
         sinResultados.hidden = visibles !== 0;
       }
 
       buscador.addEventListener("input", filtrar);
-      categoria.addEventListener("change", filtrar);
+
+      // Si querés mantener esto: al elegir categoría, mostrar TODO esa categoría
+      categoria.addEventListener("change", function () {
+        buscador.value = "";
+        filtrar();
+      });
 
       filtrar();
     })();
