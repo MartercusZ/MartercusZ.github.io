@@ -24,7 +24,7 @@
     <input
       id="buscador"
       type="search"
-      placeholder="Buscar: TANGO, GRAYS, SOBRE… o 'buzo' / 'remera'"
+      placeholder="Buscar: TANGO… o buzo/canguro o remera/camiseta"
       autocomplete="off"
       aria-label="Buscar"
     />
@@ -32,7 +32,9 @@
     <select id="categoria" aria-label="Filtrar por categoría">
       <option value="all">Todo</option>
       <option value="buzos">Buzos</option>
+      <option value="canguros">Canguros</option>
       <option value="remeras">Remeras</option>
+      <option value="camisetas">Camisetas</option>
     </select>
 
     <span id="contador" class="contador" aria-live="polite"></span>
@@ -40,8 +42,9 @@
 
   <main class="galeria" id="galeria">
 
+    <!-- BUZOS (también canguros) -->
     <a href="tango.html" class="producto"
-       data-category="buzos"
+       data-category="buzos canguros"
        data-name="tango">
       <img src="material/buzo negro/IMG_2158.JPG" alt="Drop 1">
       <h3>TANGO</h3>
@@ -49,7 +52,7 @@
     </a>
 
     <a href="grays.html" class="producto"
-       data-category="buzos"
+       data-category="buzos canguros"
        data-name="grays">
       <img src="material/buzo gris/SaveClip.App_451575151_7862133527204979_7448834506020092258_n.jpg" alt="Drop 2">
       <h3>GRAYS</h3>
@@ -57,27 +60,28 @@
     </a>
 
     <a href="presenciaVioleta.html" class="producto"
-       data-category="buzos"
+       data-category="buzos canguros"
        data-name="presencia violeta">
       <img src="material/buzo violeta/1.jpg" alt="Drop 3">
       <h3>PRESENCIA VIOLETA</h3>
       <p>Texturas al punto de hartarte.</p>
     </a>
 
-    <a href="t1.html" class="producto"
-       data-category="remeras"
-       data-name="basicos">
-      <img src="material/basicos/T1/T1.jpg" alt="Basicos">
-      <h3>T1</h3>
-      <p>Vestite como quieras, pero que sea TOTY</p>
-    </a>
-
     <a href="sobre.html" class="producto"
-       data-category="buzos"
+       data-category="buzos canguros"
        data-name="sobre">
       <img src="material/buzo sobre/2.jpg" alt="Buzo SOBRE">
       <h3>SOBRE</h3>
       <p>Una pieza directa, elegante y con intención. Tu mensaje, tu estilo.</p>
+    </a>
+
+    <!-- REMERAS (también camisetas) -->
+    <a href="t1.html" class="producto"
+       data-category="remeras camisetas"
+       data-name="t1 basicos">
+      <img src="material/basicos/T1/T1.jpg" alt="Basicos">
+      <h3>T1</h3>
+      <p>Vestite como quieras, pero que sea TOTY</p>
     </a>
 
   </main>
@@ -102,6 +106,21 @@
           .trim();
       }
 
+      // ✅ Canonicaliza sinónimos (y errores comunes) a un grupo base
+      function canonCat(word) {
+        word = normalizar(word);
+        if (word === "buzo" || word === "buzos" || word === "canguro" || word === "canguros" || word === "canguero" || word === "cangueros") return "buzos";
+        if (word === "remera" || word === "remeras" || word === "camiseta" || word === "camisetas") return "remeras";
+        return word;
+      }
+
+      function splitTags(catAttr) {
+        var raw = normalizar(catAttr);
+        if (!raw) return [];
+        // separa por espacios (buzos canguros)
+        return raw.split(/\s+/).filter(Boolean);
+      }
+
       function textoDe(el, selector) {
         var n = el.querySelector(selector);
         return n ? n.textContent : "";
@@ -109,25 +128,45 @@
 
       function filtrar() {
         var q = normalizar(buscador.value);
-        var cat = categoria.value;
+        var catSelect = normalizar(categoria.value);
+
+        var qCanon = canonCat(q);
+        var qEsCat = (qCanon === "buzos" || qCanon === "remeras");
+
+        // el select también puede ser alias; lo llevamos a grupo base
+        var catCanon = (catSelect === "all") ? "all" : canonCat(catSelect);
 
         var visibles = 0;
 
         for (var i = 0; i < productos.length; i++) {
           var p = productos[i];
 
-          var pCat = p.getAttribute("data-category") || "";
+          var tags = splitTags(p.getAttribute("data-category") || "");
+          // construimos un set de tags + sus grupos base
+          var tagSet = {};
+          for (var t = 0; t < tags.length; t++) {
+            tagSet[tags[t]] = true;
+            tagSet[canonCat(tags[t])] = true;
+          }
+
           var pName = p.getAttribute("data-name") || "";
           var titulo = textoDe(p, "h3");
           var desc = textoDe(p, "p");
 
-          // ✅ Este “searchBlob” incluye la categoría, así que "buzo/remera" matchea
-          var searchBlob = normalizar(pName + " " + pCat + " " + titulo + " " + desc);
+          // ✅ blob incluye tags, así que escribir "canguro" o "camiseta" también encuentra
+          var searchBlob = normalizar(pName + " " + tags.join(" ") + " " + titulo + " " + desc);
 
-          var matchCat = (cat === "all") || (pCat === cat);
-          var matchText = (q === "") || (searchBlob.indexOf(q) !== -1);
+          // --- categoría por select ---
+          var matchCatSelect = (catCanon === "all") ? true : !!tagSet[catCanon];
 
-          var mostrar = matchCat && matchText;
+          // --- categoría por búsqueda (si el usuario escribe buzo/canguro/remera/camiseta) ---
+          var matchCatQuery = !qEsCat ? true : !!tagSet[qCanon];
+
+          // --- texto ---
+          // si q es una categoría, no obligamos texto extra
+          var matchText = (q === "") || qEsCat || (searchBlob.indexOf(q) !== -1);
+
+          var mostrar = matchCatSelect && matchCatQuery && matchText;
 
           p.style.display = mostrar ? "" : "none";
           if (mostrar) visibles++;
@@ -139,7 +178,7 @@
 
       buscador.addEventListener("input", filtrar);
 
-      // Si querés mantener esto: al elegir categoría, mostrar TODO esa categoría
+      // si cambiás el select, limpiamos el buscador para mostrar todo de esa categoría
       categoria.addEventListener("change", function () {
         buscador.value = "";
         filtrar();
