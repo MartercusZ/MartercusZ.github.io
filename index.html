@@ -123,7 +123,9 @@
       height: auto;
       min-height: 0;
       background: #000 url("material/portada.jpg") center center / cover no-repeat;
-      padding: 56px 14px 18px 14px;
+
+      /* ✅ más aire arriba para que se vea más la foto */
+      padding: 96px 14px 18px 14px; /* antes: 56px 14px 18px 14px */
     }
 
     body.is-ios video{ display:none; }
@@ -150,7 +152,9 @@
       display:none;
       position: relative;
       z-index: 2;
-      margin-top: 14px;
+
+      /* ✅ bajamos la grilla ~5cm (aprox) */
+      margin-top: 56px; /* antes: 14px */
     }
 
     body.is-ios .ios-featured-grid{
